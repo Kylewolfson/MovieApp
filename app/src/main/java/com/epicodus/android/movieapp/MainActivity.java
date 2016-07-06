@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.searchButton) Button mSearchButton;
     @Bind(R.id.searchParam) EditText mSearchParam;
+    @Bind(R.id.searchActorButton) Button mSearchActorButton;
 
 
     @Override
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
 
         mSearchButton.setOnClickListener(this);
+        mSearchActorButton.setOnClickListener(this);
     }
 
     @Override
@@ -30,6 +32,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String searchParam = mSearchParam.getText().toString();
             Intent intent = new Intent(MainActivity.this, SearchResultsActivity.class);
             intent.putExtra("searchParam", searchParam);
+            intent.putExtra("searchType", "movie");
+            startActivity(intent);
+        }
+        if(v == mSearchActorButton) {
+            String searchParam = mSearchParam.getText().toString();
+            Intent intent = new Intent(MainActivity.this, SearchResultsActivity.class);
+            intent.putExtra("searchParam", searchParam);
+            intent.putExtra("searchType", "person");
             startActivity(intent);
         }
     }

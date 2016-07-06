@@ -26,7 +26,8 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String searchParam = intent.getStringExtra("searchParam");
-        getMovies("query", searchParam);
+        String searchType = intent.getStringExtra("searchType");
+        getMovies(searchType, searchParam);
     }
 
         private void getMovies(String searchType, String searchParam) {
