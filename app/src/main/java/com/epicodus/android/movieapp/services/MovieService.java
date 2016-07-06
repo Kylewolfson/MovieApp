@@ -51,7 +51,7 @@ public class MovieService {
                 for (int i = 0; i < moviesJSON.length(); i++) {
                     JSONObject movieJSON = moviesJSON.getJSONObject(i);
                     String name = movieJSON.getString("title");
-                    String imageUrl = movieJSON.optString("poster_path", "Unavailable");
+                    String imageUrl = "https://image.tmdb.org/t/p/w300_and_h450_bestv2/" + movieJSON.optString("poster_path", "Unavailable");
                     String synopsis = movieJSON.optString("overview");
                     Movie movie = new Movie(name, synopsis, imageUrl);
                     movies.add(movie);
