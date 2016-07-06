@@ -1,12 +1,20 @@
-package com.epicodus.android.movieapp;
+package com.epicodus.android.movieapp.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.epicodus.android.movieapp.R;
+import com.epicodus.android.movieapp.adapters.MovieListAdapter;
+import com.epicodus.android.movieapp.models.Movie;
+import com.epicodus.android.movieapp.services.MovieService;
+
 import java.io.IOException;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,6 +24,11 @@ import okhttp3.Response;
 
 public class SearchResultsActivity extends AppCompatActivity {
     public static final String TAG = SearchResultsActivity.class.getSimpleName();
+
+    @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
+    private MovieListAdapter mAdapter;
+
+    public ArrayList<Movie> mMovies = new ArrayList<>();
 
 
     @Override
@@ -40,14 +53,20 @@ public class SearchResultsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    String jsonData = response.body().string();
-                    Log.v(TAG, jsonData);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            public void onResponse(Call call, Response response) {
+                mMovies = movieService.processResults(response);
 
+                SearchResultsActivity.this.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        mAdapter = new MovieListAdapter(getApplicationContext(), mMovies);
+                        mRecyclerView.setAdapter(mAdapter);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SearchResultsActivity.this);
+                        mRecyclerView.setLayoutManager(layoutManager);
+                        mRecyclerView.setHasFixedSize(true);
+                    }
+                });
             }
         });
     }
