@@ -51,6 +51,7 @@ public class MovieService {
                 for (int i = 0; i < moviesJSON.length(); i++) {
                     JSONObject movieJSON = moviesJSON.getJSONObject(i);
                     String name = movieJSON.getString("title");
+                    String date = movieJSON.getString("release_date");
                     String imageUrl;
                     if (movieJSON.getString("poster_path") == "null") {
                         imageUrl = "https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg";
@@ -59,7 +60,7 @@ public class MovieService {
                         imageUrl = "https://image.tmdb.org/t/p/w300_and_h450_bestv2/" + movieJSON.getString("poster_path");
                     }
                     String synopsis = movieJSON.optString("overview");
-                    Movie movie = new Movie(name, synopsis, imageUrl);
+                    Movie movie = new Movie(name, synopsis, imageUrl, date);
                     movies.add(movie);
                 }
             }

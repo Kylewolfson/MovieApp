@@ -32,14 +32,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v == mSearchButton) {
             String searchParam = mSearchParam.getText().toString();
-            Intent intent = new Intent(MainActivity.this, SearchResultsActivity.class);
+            Intent intent = new Intent(MainActivity.this, SearchResultsListActivity.class);
             intent.putExtra("searchParam", searchParam);
             intent.putExtra("searchType", "movie");
             startActivity(intent);
         }
         if(v == mSearchActorButton) {
             String searchParam = mSearchParam.getText().toString();
-            Intent intent = new Intent(MainActivity.this, SearchResultsActivity.class);
+            Intent intent = new Intent(MainActivity.this, SearchResultsListActivity.class);
             intent.putExtra("searchParam", searchParam);
             intent.putExtra("searchType", "person");
             startActivity(intent);
